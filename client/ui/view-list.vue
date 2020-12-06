@@ -1,6 +1,6 @@
 <template>
   <b-list-group
-    style="overflow-x:scroll; resize: inherit;"
+    style="overflow-x: auto; resize: inherit;"
   >
     <b-list-group-item
       v-for="(item, index) in views"

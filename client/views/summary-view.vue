@@ -3,37 +3,77 @@
   style="height: 250px;"
   >
     <no-data v-if="!dataAvailable" />
-    <table
-      v-else
-      class="summary-table"
+    <div
+      v-else-if="currView === 0"
     >
-      <tr>
-        <th>Name</th>
-        <th>Value</th>
-        <th>{{"% of '" + currDividor + "'"}}</th>
-      </tr>
-      <tr
-        v-for="(value, index) in included"
-        :key="value"
-        :style="'color: ' + itemColor(value)"
+      <table
+        class="summary-table"
       >
-        <td 
-          @click="setDividor(index)" 
-          :style="setCursor(index)"
+        <tr>
+          <th>Name</th>
+          <th>Value</th>
+          <th>{{"% of '" + currDividor + "'"}}</th>
+        </tr>
+        <tr
+          v-for="(value, index) in included"
+          :key="value"
+          :style="'color: ' + itemColor(value)"
         >
-          {{ value["string"] }}
-        </td>
-        <td class="value-cell">
-          {{ formatNumber(data.summary[value["string"]]) }}
-        </td>
-        <td style="padding-left: 1rem" class="value-cell">
-          {{ percents(index) }}
-        </td>
-      </tr>
-    </table>
-    <div style="padding-top: 1rem; text-align: center; color: gray;">
-      Hint: click on a name to change the percents
+          <td 
+            @click="setDividor(index)" 
+            :style="setCursor(index)"
+          >
+            {{ value["string"] }}
+          </td>
+          <td class="value-cell">
+            {{ formatNumber(data.summary[value["string"]]) }}
+          </td>
+          <td style="padding-left: 1rem" class="value-cell">
+            {{ percents(index) }}
+          </td>
+        </tr>
+      </table>
+      <div style="padding-top: 1rem; text-align: center; color: gray;">
+        Hint: click on a name to change the percents
+      </div>
     </div>
+    <div
+      v-else-if="currView === 1"
+    >
+      <table class="summary-table">
+        <tr>
+          <th>Property</th>
+          <th>Displayed</th>
+          <th>Have %</th>
+        </tr>
+        <tr
+          v-for="(value, index) in data.summary"
+          :key="index"
+        >
+          <td>
+            {{ index }}
+          </td>
+          <td class="value-cell">
+            <input 
+              type="checkbox" 
+              :id="'checkbox_' + index"
+              :value="includedIncludes(index + ' ex_val') != undefined"
+              @click="includeCheckChanged(index)"
+            >
+          </td>
+          <td style="padding-left: 1rem" class="value-cell">
+            <input 
+              v-show="includedIncludes(index + ' perc_v-show') != undefined"
+              type="checkbox" 
+              :id="'checkbox_perc_' + index"
+              :value="percentVal(index + ' perc_val')"
+              @click="percentsCheckChanged(index + ' perc_click', $event)"
+            >
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div v-else>Internal Error: no data for current view.</div>
   </div>
 </template>
 
@@ -55,6 +95,7 @@ import { unifiedRound } from './views-utils';
     "data": () => ({
       "included": defaultIncluded(),
       "currDividor": "sequences",
+      "currView": 1,
     }),
     "props": {
       "data": {"type": Object, "required": true}
@@ -86,6 +127,10 @@ import { unifiedRound } from './views-utils';
       }
     },
     "methods": {
+      "includedIncludes": function(string){
+        console.log("includedIncludes - " + string);
+        return this.included.find((val) => val["string"] === string);
+      },
       "formatNumber": function (number) {
         number = Math.round(number * 1000)/1000;
         if (Number.isInteger) {
@@ -120,6 +165,44 @@ import { unifiedRound } from './views-utils';
         }else{
           return "";
         }
+      },
+      "includeCheckChanged": function(string){
+        let checked =  this.$refs["checkbox_" + string].checked;
+        if(checked){
+          this.includeCheck(string);
+        }else{
+          this.includeUncheck(string);
+        }
+      },
+      "includeCheck": function(string){
+        included.push({
+          "string": string
+        });
+      },
+      "includeUncheck": function(string){
+        included = included.filter((s) => s["string"] != string);
+      },
+      "percentsCheckChanged": function(string){
+        let checked = document.getElementById("checkbox_perc_" + string).checked;
+        if(checked){
+          this.percentsCheck(string);
+        }else{
+          this.percentsUncheck(string);
+        }
+      },
+      "percentsCheck": function(string){
+        console.log("percentCheck");
+        let including = this.includedIncludes(string);
+        including["noPercents"] = undefined;
+      },
+      "percentsUncheck": function(string){
+        console.log("percentuncheck");
+        let including = this.includedIncludes(string);
+        including["noPercents"] = true;
+      },
+      "percentVal": function(string){
+        let including = this.includedIncludes(string);
+        return including["noPercents"];
       }
     }
   };

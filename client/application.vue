@@ -359,7 +359,7 @@
   .scroll-window {
     padding-top: 1em;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: calc(100vh - 4em);
   }
 

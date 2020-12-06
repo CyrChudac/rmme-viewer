@@ -1,0 +1,20 @@
+// NAVBAR UPLOAD IS MESSED UP WITHOUT THIS
+
+.form-inline {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center; // Prevent shorter elements from growing to same height as others (e.g., small buttons growing to normal sized button height)
+
+
+  // Kick in the inline
+  @include media-breakpoint-up(sm) {
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+    }
+  }
+}
+
+/**/
