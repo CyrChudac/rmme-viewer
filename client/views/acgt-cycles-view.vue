@@ -5,7 +5,7 @@
       v-else-if="menuData.graph === 'area'"
       :data="plotData"
       :text="plotText"
-      :heightModifier=3.5
+      :heightModifier="0.8"
       :args="args"
       :resize-notification="resizeNotification"
       pretext="Cycle"
@@ -15,7 +15,7 @@
       v-else-if="menuData.graph === 'line'"
       :data="plotData"
       :text="plotText"
-      :heightModifier=2
+      :heightModifier=0.8
       :args="args"
       :resize-notification="resizeNotification"
       pretext="Cycle"

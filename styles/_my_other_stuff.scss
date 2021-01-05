@@ -1,0 +1,39 @@
+.scroll-window {
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 1em;
+    overflow-x: hidden;
+    display: block;
+    overflow-y: auto;
+    height: calc(100vh - 4em);
+    background-color: #add8e6;
+    border-right-width: 1px;
+    border-right-color: $white;
+    width: 11vw;
+}
+
+.right{
+    float: right;
+}
+
+.left{
+    float: left;
+}
+
+.whole-app{
+    margin-left: 11%;
+    margin-right: 11%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    background-color: $gray-100;
+}
+
+.outer-background{
+    background-color: $white;
+    margin: 0 0 0 0;
+}
+
+.c-col{
+    display: block; 
+    float: left;
+}

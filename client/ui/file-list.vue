@@ -1,13 +1,10 @@
 <template>
-  <b-list-group>
-    <b-list-group-item
+  <span style="overflow-x: auto; resize: inherit;">
+    <div
       v-for="(item, index) in files"
       :key="index"
       :active="index === value"
-      button
-      :variant="variant(item)"
-      class="d-flex justify-content-between align-items-center stayOnLine"
-      style="padding-left: 0.35rem"
+      :class="'d-flex justify-content-between btn align-items-center c-list-group-item-' + themeNum + '-' + variant(item) + active(index)"
       @click="onSelect(index)"
     >
       <span 
@@ -18,15 +15,15 @@
         />
       </span>
       {{ item.label }}
-      <b-button
+      <span
+        class="btn"
         pill
-        variant="danger"
         @click.stop="onDelete(index)"
       >
         <font-awesome-icon icon="trash" />
-      </b-button>
-    </b-list-group-item>
-  </b-list-group>
+      </span>
+    </div>
+  </span>
 </template>
 
 <script>
@@ -37,9 +34,12 @@
     "props": {
       "files": {"type": Array, "required": true},
       "value": {"type": Number, "required": true},
+      "themeNum": {"type": Number, "default": 2},
+      "index": {"type": Number, "default": -1},
     },
     "methods": {
       "onSelect": function (index) {
+        this.index = index;
         this.$emit("input", index);
       },
       "onDelete": function (index) {
@@ -47,6 +47,11 @@
       },
       "variant": function (item){
         return selectVariant(item.status);
+      },
+      "active": function (index){
+        if(this.index === index)
+          return "-active";
+        return "";
       },
       "icon": function (item){
         return selectIcon(item.status);
@@ -57,11 +62,3 @@
     },
   }
 </script>
-
-<style scoped>
-
-.stayOnLine{
-  white-space: nowrap;
-}
-
-</style>

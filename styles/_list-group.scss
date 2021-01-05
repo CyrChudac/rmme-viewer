@@ -4,6 +4,7 @@
 //
 // Easily usable on <ul>, <ol>, or <div>.
 
+/*
 .list-group {
   display: flex;
   flex-direction: column;
@@ -91,6 +92,54 @@
 // Add modifier classes to change text and background color on individual items.
 // Organizationally, this must come after the `:hover` states.
 
-@each $color, $value in $theme-colors {
+@each $color, $value in nth($themes, -1) {
   @include list-group-item-variant($color, theme-color-level($color, -9), theme-color-level($color, 6));
+}
+*/
+
+@function themes-color($num: 1, $key: "right") {
+  $theme: nth($list: $themes, $n: -$num);
+  @return map-get($theme, $key);
+}
+
+@function themes-color-level($num: 1, $color-name: "right", $level: 0) {
+  $color: themes-color($num, $color-name);
+  $color-base: if($level > 0, $black, $white);
+  $level: abs($level);
+
+  @return mix($color-base, $color, $level * $theme-color-interval);
+}
+
+@mixin c-list-group-item-variant($num, $state, $background, $color) {
+  .c-list-group-item-#{$num}-#{$state} {
+    color: $color;
+    background-color: $background;
+    cursor: pointer;
+    padding-top: 1rem;
+    text-align: left;
+    width: 87%;
+    margin-left: 1%;
+    margin-right: 1%;
+    padding-left: 0.35rem;
+    padding-left: 0.35rem;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: darken($background, 10%);
+    }
+  }
+  .c-list-group-item-#{$num}-#{$state}-active {
+    @extend .c-list-group-item-#{$num}-#{$state};
+    background-color: darken($background, 20%);
+  }
+}
+
+@for $i from 1 through length($themes){ 
+  @each $variant, $value in nth($themes, -$i) {
+    @include c-list-group-item-variant($i, 
+      $variant,
+      themes-color-level($i, $variant, -9),
+      themes-color-level($i, $variant, 6)
+    );
+  }
 }

@@ -1,11 +1,32 @@
 @import "colors";
 
+$right:          $cyan !default;
+$mediocre:       $yellow !default;
+$wrong:          $red !default;
 
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-800 !default;
+$theme-colors-1: () !default;
+$theme-colors-1: map-merge(
+  (
+    "right":    $white,
+    "mediocre":  $gray-500,
+    "wrong":    $black,
+  ),
+  $theme-colors-1
+);
+
+$themes: [] !default;
+$themes: append($themes, $theme-colors-1);
+
+
+$theme-colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-colors: map-merge(
+  (
+    "right":    $right,
+    "mediocre":  $mediocre,
+    "wrong":    $wrong,
+  ),
+  $theme-colors
+);
+
+$themes: append($themes, $theme-colors);

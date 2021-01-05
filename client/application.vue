@@ -1,91 +1,90 @@
 <template>
-  <div class="bg-light">
-    <b-container
+<span class="outer-background">
+  <div class="whole-app">
+    <span
       class="p-0 bg-white"
       fluid="sm" 
     >
-      <b-navbar
+      <span
         toggleable="lg"
         type="light"
-        variant="info"
-        class="navbar"
+        variant="right"
+        class="navbar navbar-height"
       >
-        <b-navbar-brand href="#">
+        <span href="#" class="navbar-brand left">
           RMME Viewer
-        </b-navbar-brand>
-        <b-collapse
-          id="nav-collapse"
-          is-nav
-        >
-          <b-nav-form>
-            <input
-              id="files"
-              type="file"
-              name="files"
-              class="file-upload"
-              multiple
-              @change="onUploadFiles"
-            >
-            <label for="files">
-              <div class="btn file-upload-button">
-                <font-awesome-icon icon="upload" />
-              </div>
-            </label>
-          </b-nav-form>
-          <b-navbar-nav>
-            <span style="margin-right: 1rem; margin-left: 1rem">
-              <b>Active file:</b> {{ files[activeFileIndex]["label"] }}
-            </span>
-          </b-navbar-nav>
-          <b-navbar-nav class="ml-auto">
-            <example-text-list 
-              v-model="activeExample"
-              :data="activeViewExamples"
-            />
-            <acgt-cycles-view-menu
-              v-if="activeViewIndex === 1"
-              :data="menuData[1]"
-            />
-          </b-navbar-nav>
-        </b-collapse>
-      </b-navbar>
-      <b-container
+        </span>
+        <span class="navbar-upload left">
+          <input
+            id="files"
+            type="file"
+            name="files"
+            class="file-upload"
+            multiple
+            @change="onUploadFiles"
+          >
+          <label for="files">
+            <div class="btn file-upload-button">
+              <font-awesome-icon icon="upload" />
+            </div>
+          </label>
+        </span>
+        <span class="navbar-nav left">
+          <span style="margin-right: 1rem; margin-left: 1rem">
+            <b>Active file:</b> {{ files[activeFileIndex]["label"] }}
+          </span>
+        </span>
+        <span class="navbar-nav ml-auto right">
+          <example-text-list 
+            v-model="activeExample"
+            :data="activeViewExamples"
+          />
+        </span>
+        <span class="navbar-nav ml-auto right">
+          <acgt-cycles-view-menu
+            v-if="activeViewIndex === 1"
+            :data="menuData[1]"
+          />
+        </span>
+      </span>
+      <span
         fluid
       >
-        <b-row>
-          <b-col
+        <span>
+          <span
             v-if="showFileList"
             :sm="6"
             :md="2"
             :class="{active: activeList === 0}"
-            class="scroll-window"
+            class="scroll-window c-col"
           >
             <file-list
               v-model="activeFileIndex"
               :files="files"
               @delete="onDeleteFile"
             />
-          </b-col>
-          <b-col
+          </span>
+          <span
             v-if="showViewList"
             :sm="6"
             :md="2"
             :class="{active: activeList === 1}"
-            class="scroll-window"
+            class="scroll-window c-col"
           >
             <view-list
               style="overflow: hidden; resize: none"
               v-on:change-view-index="changeViewIndex($event)"
               :views="views"
             />
-          </b-col>
+          </span>
           <left-view-menu-column
             :files="showFileList"
             :views="showViewList"
             @toggleFiles="onToggleFiles"
             @toggleViews="onToggleViews"
+            class="c-col"
           />
-          <b-col>
+          <span>
             <view-column
               :active-view="activeViewIndex"
               :data="activeViewData"
@@ -97,12 +96,14 @@
               :thresholdsValues="thresholds"
               v-on:reset-example="activeExample = -1"
               v-on:change-thresholds="thresholds = $event.target.value"
+              class="c-col"
             />
-          </b-col>
-        </b-row>
-      </b-container>
-    </b-container>
+          </span>
+        </span>
+      </span>
+    </span>
   </div>
+</span>
 </template>
 
 <script>
@@ -220,19 +221,13 @@
       },
       "viewColumnWidth": function () {
         const visible = this.showFileList + this.showViewList;
-        let sm = 12;
-        let md;
         if (visible === 2) {
-            md = 8;
+            return 47;
         } else if (visible === 1) {
-            md = 10;
+            return 60;
         } else {
-            md = 12;
+            return 73;
         }
-        return {
-          "sm": sm+5,
-          "md": md+1,
-        };
       },
     },
     "methods": {
@@ -346,21 +341,15 @@
 </script>
 
 <style scoped>
-  .navbar {
-    height: 3rem;
+  .navbar-height {
+    height: 2rem;
+    line-height: 2rem;
   }
 
   .circle-menu {
     position: fixed;
     top: 0.5rem;
     left: 50%;
-  }
-
-  .scroll-window {
-    padding-top: 1em;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: calc(100vh - 4em);
   }
 
   .fixed-window {

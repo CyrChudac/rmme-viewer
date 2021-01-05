@@ -1,15 +1,12 @@
 <template>
-  <b-list-group
+  <span
     style="overflow-x: auto; resize: inherit;"
   >
-    <b-list-group-item
+    <div
       v-for="(item, index) in views"
       :key="index"
-      :variant="variant(item)"
       :active="index === value"
-      class="stayOnLine"
-      style="padding-left: 0.35rem"
-      button
+      :class="'btn c-list-group-item-' + themeNum + '-' + variant(item) + active(index)"
       @click="onSelect(index)"
     >
       <span 
@@ -20,8 +17,8 @@
         />
       </span>
       {{ item.label }}
-    </b-list-group-item>
-  </b-list-group>
+    </div>
+  </span>
 </template>
 
 <script>
@@ -38,9 +35,12 @@
     "props": {
       "views": {"type": Array, "required": true},
       "value": {"type": Number, "required": true},
+      "themeNum": {"type": Number, "default": 1},
+      "index": {"type": Number, "default": -1},
     },
     "methods": {
       "onSelect": function (index) {
+        this.index = index;
         this.$emit("change-view-index", index);
       },
       "variant": function (item){
@@ -49,6 +49,11 @@
         }else{
           return selectVariant(undefined);
         }
+      },
+      "active": function (index){
+        if(this.index === index)
+          return "-active";
+        return "";
       },
       "icon": function (item){
         if(item.status){
@@ -68,11 +73,3 @@
   } 
 
 </script>
-
-<style scoped>
-
-.stayOnLine{
-  white-space: nowrap;
-}
-
-</style>

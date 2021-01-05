@@ -5,7 +5,7 @@
       v-else
       :data="plotData"
       :text="plotText"
-      :heightModifier=2.5
+      :heightModifier=0.9
       :resize-notification="resizeNotification"
       :args="args"
     />

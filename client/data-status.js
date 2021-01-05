@@ -34,12 +34,12 @@ export function selectIcon(status){
 export function selectVariant(status) {
     switch(status) {
         case STATUS_WARNING:
-            return "warning";
+            return "mediocre";
         case STATUS_INVALID:
-            return "danger";
+            return "wrong";
         case STATUS_OK:
         default:
-            return "info";
+            return "right";
     }
 }
 

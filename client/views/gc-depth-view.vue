@@ -6,7 +6,7 @@
       :line="lineData"
       :area="areaData"
       :text="plotText"
-      :heightModifier=2
+      :heightModifier=0.8
       :resize-notification="resizeNotification"
       :args="args"
     />

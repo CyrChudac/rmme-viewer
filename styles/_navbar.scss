@@ -4,11 +4,14 @@
 // other navbar variations.
 
 .navbar {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap; // allow us to do the line break for collapsing content
+  display: block;
+  flex-wrap: nowrap;
   align-items: center;
-  justify-content: space-between; // space out brand from logo
+  justify-content: normal;
+  background-color: $navbar-background-color;
+  color: $navbar-color;
+  margin: 0 0 0 0;
+  width: 100%;
   padding: $navbar-padding-y $navbar-padding-x;
 
   // Because flex properties aren't inherited, we need to redeclare these first
@@ -24,10 +27,25 @@
   .container-fluid {
     @extend %container-flex-properties;
   }
+  
+  .navbar-toggler {
+    color: $navbar-color;
+    border-color: $navbar-toggler-border-color;
+  }
 
-  @each $breakpoint, $container-max-width in $container-max-widths {
-    > .container#{breakpoint-infix($breakpoint, $container-max-widths)} {
-      @extend %container-flex-properties;
+  .navbar-toggler-icon {
+    background-image: escape-svg($navbar-toggler-icon-bg);
+  }
+
+  .navbar-text {
+    color: $navbar-color;
+    a {
+      color: $navbar-active-color;
+
+      &:hover,
+      &:focus {
+        color: $navbar-active-color;
+      }
     }
   }
 }
@@ -44,15 +62,25 @@
   padding-top: $navbar-brand-padding-y;
   padding-bottom: $navbar-brand-padding-y;
   margin-right: $navbar-padding-x;
-  @include font-size($navbar-brand-font-size);
+  font-size: "#{$navbar-brand-font-size}%";
   line-height: inherit;
   white-space: nowrap;
+  color: $navbar-brand-color;
 
-  @include hover-focus() {
+  &:hover,
+  &:focus {
     text-decoration: none;
+    color: $navbar-brand-hover-color;
   }
 }
 
+.navbar-upload {
+  flex-flow: row wrap;
+  align-items: center; // Prevent shorter elements from growing to same height as others (e.g., small buttons growing to normal sized button height)
+  color: $navbar-color;
+  text-align: center;
+  
+}
 
 // Navbar nav
 //
@@ -61,20 +89,36 @@
 // sets the file name position
 
 .navbar-nav {
-  display: flex;
-  flex-direction: column; // cannot use `inherit` to get the `.navbar`s value
+  flex-direction: row; // cannot use `inherit` to get the `.navbar`s value
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  color: $navbar-color;
 
   .nav-link {
     padding-right: 0;
     padding-left: 0;
+    
+    &:hover,
+    &:focus {
+      color: $navbar-hover-color;
+    }
+
+    &.disabled {
+      color: $navbar-disabled-color;
+    }
   }
 
   .dropdown-menu {
     position: static;
     float: none;
+  }
+
+  .show > .nav-link,
+  .active > .nav-link,
+  .nav-link.show,
+  .nav-link.active {
+    color: $navbar-active-color;
   }
 }
 
@@ -92,135 +136,4 @@
   // For always expanded or extra full navbars, ensure content aligns itself
   // properly vertically. Can be easily overridden with flex utilities.
   align-items: center;
-}
-
-// Generate series of `.navbar-expand-*` responsive classes for configuring
-// where your navbar collapses.
-.navbar-expand {
-  @each $breakpoint in map-keys($grid-breakpoints) {
-    $next: breakpoint-next($breakpoint, $grid-breakpoints);
-    $infix: breakpoint-infix($next, $grid-breakpoints);
-
-    &#{$infix} {
-      @include media-breakpoint-down($breakpoint) {
-        %container-navbar-expand-#{$breakpoint} {
-          padding-right: 0;
-          padding-left: 0;
-        }
-
-        > .container,
-        > .container-fluid {
-          @extend %container-navbar-expand-#{$breakpoint};
-        }
-
-        @each $size, $container-max-width in $container-max-widths {
-          > .container#{breakpoint-infix($size, $container-max-widths)} {
-            @extend %container-navbar-expand-#{$breakpoint};
-          }
-        }
-      }
-
-      @include media-breakpoint-up($next) {
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-
-        .navbar-nav {
-          flex-direction: row;
-
-          .dropdown-menu {
-            position: absolute;
-          }
-
-          .nav-link {
-            padding-right: $navbar-nav-link-padding-x;
-            padding-left: $navbar-nav-link-padding-x;
-          }
-        }
-
-        // For nesting containers, have to redeclare for alignment purposes
-        %container-nesting-#{$breakpoint} {
-          flex-wrap: nowrap;
-        }
-
-        > .container,
-        > .container-fluid {
-          @extend %container-nesting-#{$breakpoint};
-        }
-
-        @each $size, $container-max-width in $container-max-widths {
-          > .container#{breakpoint-infix($size, $container-max-widths)} {
-            @extend %container-nesting-#{$breakpoint};
-          }
-        }
-
-        .navbar-collapse {
-          display: flex !important; // stylelint-disable-line declaration-no-important
-
-          // Changes flex-bases to auto because of an IE10 bug
-          flex-basis: auto;
-        }
-
-        .navbar-toggler {
-          display: none;
-        }
-      }
-    }
-  }
-}
-
-
-// Navbar themes
-//
-// Styles for switching between navbars with light or dark background.
-
-// Dark links against a light background
-.navbar-light {
-  .navbar-brand {
-    color: $navbar-light-brand-color;
-
-    @include hover-focus() {
-      color: $navbar-light-brand-hover-color;
-    }
-  }
-
-  .navbar-nav {
-    .nav-link {
-      color: $navbar-light-color;
-
-      @include hover-focus() {
-        color: $navbar-light-hover-color;
-      }
-
-      &.disabled {
-        color: $navbar-light-disabled-color;
-      }
-    }
-
-    .show > .nav-link,
-    .active > .nav-link,
-    .nav-link.show,
-    .nav-link.active {
-      color: $navbar-light-active-color;
-    }
-  }
-
-  .navbar-toggler {
-    color: $navbar-light-color;
-    border-color: $navbar-light-toggler-border-color;
-  }
-
-  .navbar-toggler-icon {
-    background-image: escape-svg($navbar-light-toggler-icon-bg);
-  }
-
-  .navbar-text {
-    color: $navbar-light-color;
-    a {
-      color: $navbar-light-active-color;
-
-      @include hover-focus() {
-        color: $navbar-light-active-color;
-      }
-    }
-  }
 }

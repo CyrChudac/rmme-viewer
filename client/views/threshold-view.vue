@@ -13,35 +13,35 @@
         <th>View</th>
         <th class="value-cell">
           <span 
-            :style="'color: ' + color(status_ok)"
+            :style="'color: ' + color(status_right)"
           >
             <font-awesome-icon
-              :icon="icon(status_ok)"
+              :icon="icon(status_right)"
             />
           </span>
           <span> / </span>
           <span 
-            :style="'color: ' + color(status_warning)"
+            :style="'color: ' + color(status_mediocre)"
           >
             <font-awesome-icon
-              :icon="icon(status_warning)"
+              :icon="icon(status_mediocre)"
             />
           </span>
         </th>
         <th class="value-cell">
           <span 
-            :style="'color: ' + color(status_warning)"
+            :style="'color: ' + color(status_mediocre)"
           >
             <font-awesome-icon
-              :icon="icon(status_warning)"
+              :icon="icon(status_mediocre)"
             />
           </span>
           <span> / </span>
           <span 
-            :style="'color: ' + color(status_invalid)"
+            :style="'color: ' + color(status_wrong)"
           >
             <font-awesome-icon
-              :icon="icon(status_invalid)"
+              :icon="icon(status_wrong)"
             />
           </span>
         </th>
@@ -112,9 +112,9 @@
         "thresholdsVals": {"type": Array, "required": true},
     },
     "data":() => ({
-      "status_ok": STATUS_OK,
-      "status_invalid": STATUS_INVALID,
-      "status_warning": STATUS_WARNING,
+      "status_right": STATUS_OK,
+      "status_wrong": STATUS_INVALID,
+      "status_mediocre": STATUS_WARNING,
       "hoveredOver": -1,
     }),
     "methods": {

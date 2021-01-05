@@ -5,7 +5,7 @@
       v-else
       :data="plotData"
       :text="plotText"
-      :heightModifier=2
+      :heightModifier=0.9
       :resize-notification="resizeNotification"
       :args="args"
     />
@@ -180,7 +180,7 @@
       /*/
       //uncomment to activate console output
       
-      console.log("gc-content warning_status reasons:")
+      console.log("gc-content mediocre_status reasons:")
       console.log()
       console.log(currX + ": " + currVal + " not in (" + average * (1 - (thresholds["Bad"]/100)) + ", "
        + average * (1 + (thresholds["Bad"]/100)) + ") - average = " + average + " (all rounded by unifiedRound)");

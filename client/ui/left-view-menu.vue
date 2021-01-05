@@ -1,23 +1,23 @@
 <template>
   <div class="menu-container">
     <div class="menu-bar">
-      <b-button
+      <span
         :pressed="files"
-        class="button"
+        class="btn button"
         squared
         @click="$emit('toggleFiles')"
       >
         Files
-      </b-button>
-      <b-button
+      </span>
+      <span
         :pressed="views"
         style="margin: 3rem 0 0 -0.3rem"
-        class="button"
+        class="button btn"
         squared
         @click="$emit('toggleViews')"
       >
         Views
-      </b-button>
+      </span>
     </div>
   </div>
 </template>
@@ -48,7 +48,8 @@
 
   .button {
     transform: rotate(-90deg);
-    /*height: 1.5rem;*/
+    border-radius: 0%;
     padding: 0.0rem 0.5rem 0.1rem 0.5rem;
+    background-color: teal;
   }
 </style>

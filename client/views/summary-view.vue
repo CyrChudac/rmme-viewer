@@ -40,11 +40,11 @@
     <div
       v-else-if="currView === 1"
     >
-      <table class="summary-table">
+      <table class="summary-table" style="overflow: auto">
         <tr>
           <th>Property</th>
           <th>Displayed</th>
-          <th>Have %</th>
+          <th>Show %</th>
         </tr>
         <tr
           v-for="(value, index) in data.summary"
@@ -57,23 +57,22 @@
             <input 
               type="checkbox" 
               :id="'checkbox_' + index"
-              :value="includedIncludes(index + ' ex_val') != undefined"
+              :checked="includedIncludes(index)"
               @click="includeCheckChanged(index)"
             >
           </td>
           <td style="padding-left: 1rem" class="value-cell">
-            <input 
-              v-show="includedIncludes(index + ' perc_v-show') != undefined"
+            <input
               type="checkbox" 
               :id="'checkbox_perc_' + index"
-              :value="percentVal(index + ' perc_val')"
+              :checked="percentVal(index)"
               @click="percentsCheckChanged(index + ' perc_click', $event)"
             >
           </td>
         </tr>
       </table>
     </div>
-    <div v-else>Internal Error: no data for current view.</div>
+    <div v-else>Internal Error: no data for current inner summary view.</div>
   </div>
 </template>
 
@@ -95,7 +94,7 @@ import { unifiedRound } from './views-utils';
     "data": () => ({
       "included": defaultIncluded(),
       "currDividor": "sequences",
-      "currView": 1,
+      "currView": 0,
     }),
     "props": {
       "data": {"type": Object, "required": true}
@@ -128,8 +127,10 @@ import { unifiedRound } from './views-utils';
     },
     "methods": {
       "includedIncludes": function(string){
-        console.log("includedIncludes - " + string);
-        return this.included.find((val) => val["string"] === string);
+        var res = this.included.find((val) => val["string"] === string);
+        if(res != undefined)
+          console.log("includedIncludes - " + string);
+        return res;
       },
       "formatNumber": function (number) {
         number = Math.round(number * 1000)/1000;
@@ -196,13 +197,13 @@ import { unifiedRound } from './views-utils';
         including["noPercents"] = undefined;
       },
       "percentsUncheck": function(string){
-        console.log("percentuncheck");
+        console.log("percentUncheck");
         let including = this.includedIncludes(string);
         including["noPercents"] = true;
       },
       "percentVal": function(string){
         let including = this.includedIncludes(string);
-        return including["noPercents"];
+        return including != undefined && !including["noPercents"];
       }
     }
   };

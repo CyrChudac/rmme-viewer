@@ -1,7 +1,6 @@
 <template>
-  <b-col
-    :sm="width.sm"
-    :md="width.md"
+  <span
+    :style="'width: ' + width + 'vw;'"
     :class="'fixed-window view-column' + borderClass()"
   >
     <font-awesome-icon
@@ -9,6 +8,7 @@
       class="cross button"
       @click="resetExamples()"
       icon="times" 
+      style="cursor: pointer;"
     />
     <div 
       class="rotated text-center"
@@ -17,7 +17,7 @@
         {{yCaption()}}
       </div>
     </div>
-    <b-col class="ml-2">
+    <span class="ml-2">
       <summary-view
         v-if="activeView === 0"
         :data="data"
@@ -72,7 +72,7 @@
         :thresholdsVals="thresholdsValues"
         v-model="thresholdsValues"
       />
-    </b-col>
+    </span>
     <div class="text-center">{{xCaption()}}</div>
     <div v-if="showExample()" style="margin-top: 1rem;">
       Example text to be shown under example graph. Because we all know that example without explanation is useless.
@@ -80,7 +80,7 @@
     <div v-else-if="showResultMessage()" :style="'margin-top: 1rem; color: ' + resultColor()">
       {{ resultMessage() }}
     </div>
-  </b-col>
+  </span>
 </template>
 
 <script>
@@ -118,7 +118,7 @@
       "menuData": {"type": Object, "required": true},
       "options": {"type": Object, "required": true},
       "resizeNotification": {"type": Object, "required": true},
-      "width": {"type": Object, "required": true},
+      "width": {"type": Number, "required": true},
       "thresholdsValues": {"type": Object, "required": true},
     },
     "methods": {
