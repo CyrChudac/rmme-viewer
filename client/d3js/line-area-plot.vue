@@ -29,6 +29,8 @@
       "heightModifier": {"type": Number, "required": true},
       "resizeNotification": {"type": Object, "required": true},
       "args": {"type": Object, "default": () => ({})},
+      "pretext": {"type": String, "default": () => ""},
+      "units": {"type": String, "default": () => ""},
     },
     "data": () => ({
       "svg": null,
@@ -98,10 +100,36 @@
           .attr("stroke", (data) => data["color"])
           .attr("d", getLinePathFactory(x, y));
 
+        if (args.useFocus) {
+          addFocusLine(plot, x, y, layout, this.focusData(), this.args, this.pretext, this.units);
+        }
+
         addGrid(plot, x, y, layout);
 
         addText(plot, x, y, this.text);
       },
+      "focusData": function () {
+        let result = [];
+        this.area.forEach(a => 
+          {
+            result.push({
+              "label": a["label"] + "-min",
+              "color": a["color"],
+              "y": a["y-low"],
+              "x": a["x"],
+            });
+            result.push({
+              "label": a["label"] + "-max",
+              "color": a["color"],
+              "y": a["y-high"],
+              "x": a["x"],
+            });
+          });
+        return [
+          ...result,
+          ...this.line
+        ];
+      }
     }
   }
 

@@ -5,7 +5,6 @@
     <div
       v-for="(item, index) in views"
       :key="index"
-      :active="index === value"
       :class="'btn c-list-group-item-' + themeNum + '-' + variant(item) + active(index)"
       @click="onSelect(index)"
     >
@@ -34,7 +33,6 @@
     "name": "view-list",
     "props": {
       "views": {"type": Array, "required": true},
-      "value": {"type": Number, "required": true},
       "themeNum": {"type": Number, "default": 1},
       "index": {"type": Number, "default": -1},
     },

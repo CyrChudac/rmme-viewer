@@ -14,32 +14,27 @@ const viewsList = [
     "validator": SummaryView.validator,
     "thresholds": SummaryView.thresholds,
     "label": SummaryView.label,
-    "value": 0,
     "examples": [],
   }, {
     "validator": AcgtCyclesView.validator,
     "thresholds": AcgtCyclesView.thresholds,
     "label": AcgtCyclesView.label,
-    "value": 1,
     "examples": getNegativeExamples("acgt-cycles"),
     "menuData": AcgtCyclesView.menuData,
   }, {
     "validator": GcConventView.validator,
     "thresholds": GcConventView.thresholds,
     "label": GcConventView.label,
-    "value": 2,
     "examples": getNegativeExamples("gc-content"),
   }, {
     "validator": IndelCycleView.validator,
     "thresholds": IndelCycleView.thresholds,
     "label": IndelCycleView.label,
-    "value": 3,
     "examples": getNegativeExamples("indel-cycles"),
   }, {
     "validator": InsertSizeView.validator,
     "thresholds": InsertSizeView.thresholds,
     "label": InsertSizeView.label,
-    "value": 4,
     "examples": getNegativeExamples("insert-size"),
   }, {
     "validator": Quality2View.validator,
@@ -51,19 +46,16 @@ const viewsList = [
     "validator": Quality3View.validator,
     "thresholds": Quality3View.thresholds,
     "label": Quality3View.label,
-    "value": 6,
     "examples": getNegativeExamples("quality-3"),
   }, {
     "validator": GcDepthView.validator,
     "thresholds": GcDepthView.thresholds,
     "label": GcDepthView.label,
-    "value": 7,
     "examples": getNegativeExamples("gc-depth"),
   }, {
     "validator": ThresholdsView.validator,
     "thresholds": ThresholdsView.thresholds,
     "label": ThresholdsView.label,
-    "value": 8,
     "examples": [],
   }
 ];

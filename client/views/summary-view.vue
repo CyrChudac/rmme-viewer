@@ -77,9 +77,11 @@
 </template>
 
 <script>
+  let quiet = true;
+
   import NoData from "../ui/no-data";
   import { STATUS_OK, STATUS_WARNING, selectColor, STATUS_INVALID } from '../data-status';
-import { unifiedRound } from './views-utils';
+  import { unifiedRound } from './views-utils';
 
   export default {
     "validator": validateData,
@@ -128,8 +130,10 @@ import { unifiedRound } from './views-utils';
     "methods": {
       "includedIncludes": function(string){
         var res = this.included.find((val) => val["string"] === string);
-        if(res != undefined)
-          console.log("includedIncludes - " + string);
+        if(!quiet){
+          if(res != undefined)
+            console.log("includedIncludes - " + string);
+        }
         return res;
       },
       "formatNumber": function (number) {
@@ -192,12 +196,16 @@ import { unifiedRound } from './views-utils';
         }
       },
       "percentsCheck": function(string){
-        console.log("percentCheck");
+        if(!quiet){
+          console.log("percentCheck");
+        }
         let including = this.includedIncludes(string);
         including["noPercents"] = undefined;
       },
       "percentsUncheck": function(string){
-        console.log("percentUncheck");
+        if(!quiet){
+          console.log("percentUncheck");
+        }
         let including = this.includedIncludes(string);
         including["noPercents"] = true;
       },

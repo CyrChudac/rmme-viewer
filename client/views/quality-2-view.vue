@@ -131,6 +131,7 @@
       "args": function () {
         const options = selectData(this.options);
         return {
+          "useFocus": true,
           "yRange": {
             "max": 50,
             "min": 0,

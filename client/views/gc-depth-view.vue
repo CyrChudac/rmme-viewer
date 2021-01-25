@@ -78,6 +78,7 @@
       "args": function () {
         const options = selectData(this.options);
         return {
+          "useFocus": true,
           "margin": options["margin"],
         }
       }

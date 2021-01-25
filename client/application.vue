@@ -222,11 +222,11 @@
       "viewColumnWidth": function () {
         const visible = this.showFileList + this.showViewList;
         if (visible === 2) {
-            return 47;
+            return 45;
         } else if (visible === 1) {
-            return 60;
+            return 58;
         } else {
-            return 73;
+            return 71;
         }
       },
     },

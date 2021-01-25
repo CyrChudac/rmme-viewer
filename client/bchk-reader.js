@@ -304,7 +304,6 @@ export function loadThresholds(content){
         }
       }
     });
-    console.log(result);
     return {
       "thresholds": result,
       "file": file,
@@ -313,7 +312,6 @@ export function loadThresholds(content){
 }
 
 export function saveThresholds(thresholds) {
-  console.log("saving thresholds...");
   let data = thresholdsString(thresholds);
   let date = new Date();
   let sep = "_";

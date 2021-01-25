@@ -1,14 +1,13 @@
 <template>
   <span
-    :style="'width: ' + width + 'vw;'"
-    :class="'fixed-window view-column' + borderClass()"
+    :style="'width: ' + width + 'vw; position: relative;'"
+    :class="'fixed-window view-column ' + borderClass()"
   >
     <font-awesome-icon
       v-show="showExample()"
       class="cross button"
       @click="resetExamples()"
-      icon="times" 
-      style="cursor: pointer;"
+      icon="times"
     />
     <div 
       class="rotated text-center"
@@ -17,7 +16,7 @@
         {{yCaption()}}
       </div>
     </div>
-    <span class="ml-2">
+    <span>
       <summary-view
         v-if="activeView === 0"
         :data="data"
@@ -124,10 +123,10 @@
     "methods": {
       "xCaption": function () {
         switch(this.activeView){
-        case 1:
-          return "Cycle";
-        default:
-          return this.defaultCaption("X");
+          case 1:
+            return "Cycle";
+          default:
+            return this.defaultCaption("X");
         }
       },
       "yCaption": function () {
@@ -167,7 +166,7 @@
       },
       "borderClass": function(){
         if(this.showExample()){
-          return " border border-primary";
+          return "bordered";
         }else{
           return "";
         }
@@ -216,7 +215,7 @@
 <style scoped>
 
 .view-column{
-  padding-left: 2.2rem;
+  padding-left: 2rem;
   padding-top: 1.1rem;
   margin-top: 0.8rem;
   margin-left: 2.2rem;
@@ -244,14 +243,19 @@
   transform: rotate(180deg);
 }
 
+.bordered{
+  border: 1px solid blue;
+}
+
 .cross{
   position: absolute;
+  right: 0;
+  top: 0;
   text-align: center;
-  right: 0%;
-  top: 0%;
   width: 1.4rem;
   height: 1.4rem;
   background-color: darkorange;
   color: red;
+  cursor: pointer;
 }
 </style>

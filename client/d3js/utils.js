@@ -188,7 +188,10 @@ export function addFocusLine(svg, x, y, layout, data, args = {}, pretext, units)
 }
 
 function defaultLabel(data, valueY, units) {
-  return data.label + ": " + fixedDecimalsString(valueY, 1) + units;
+  if(! isNaN(valueY))
+    return data.label + ": " + fixedDecimalsString(valueY, 1) + units;
+  else
+  return data.label + ": " + valueY + units;
 }
 
 function fixedDecimalsString(num, decimals){
