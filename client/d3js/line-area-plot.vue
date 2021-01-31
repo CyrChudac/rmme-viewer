@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%"/>
+  <div/>
 </template>
 
 <script>
@@ -70,7 +70,6 @@
         }, args.yRange);
         const margin = computeMargin(yRange, args["margin"]);
         const layout = computeLayout(margin, this.getScreenSize(), this.heightModifier);
-
         const plot = configureGraphSvg(this.svg, layout, margin);
         const x = addXLinearScale(plot, xRange, layout);
         const y = addYLinearScale(plot, yRange, layout);

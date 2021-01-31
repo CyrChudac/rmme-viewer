@@ -35,16 +35,22 @@ export function computeMargin(yRange, defaultMargin = {}) {
   return margin;
 }
 
-let longTimeParentHeight = 0
+window.addEventListener('resize', () => longTimeParentHeight = 0);
+
+let minParHeight = 100;
+let longTimeParentHeight = 0;
 export function computeLayout(margin, size, heightModifier, args = {}) {
   if(longTimeParentHeight == 0){
-    longTimeParentHeight = size.height;
+    longTimeParentHeight = Math.max(size.height, minParHeight);
   }
   args = {
     "xLevels": 1,
     "yLevels": 1,
     ...args,
   };
+  console.log("compute layout - width = " + 
+    "(" + size.width + " / " + args.yLevels + ") - "  + margin.left + " - " + margin.right + " = " +
+   ((size.width / args.xLevels) - margin.left - margin.right));
   return {
     "width": (size.width / args.xLevels) - margin.left - margin.right,
     "height": (longTimeParentHeight * heightModifier / args.yLevels) - margin.top - margin.bottom,

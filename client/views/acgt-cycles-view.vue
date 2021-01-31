@@ -1,11 +1,11 @@
 <template>
-  <div style="height: 100%">
+  <div>
     <no-data v-if="!dataAvailable" />
     <d3-area-plot
       v-else-if="menuData.graph === 'area'"
       :data="plotData"
       :text="plotText"
-      :heightModifier="0.6"
+      :heightModifier="3"
       :args="args"
       :resize-notification="resizeNotification"
       pretext="Cycle"
@@ -15,7 +15,7 @@
       v-else-if="menuData.graph === 'line'"
       :data="plotData"
       :text="plotText"
-      :heightModifier="0.6"
+      :heightModifier="3"
       :args="args"
       :resize-notification="resizeNotification"
       pretext="Cycle"

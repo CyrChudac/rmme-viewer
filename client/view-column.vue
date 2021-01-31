@@ -73,10 +73,10 @@
       />
     </span>
     <div class="text-center">{{xCaption()}}</div>
-    <div v-if="showExample()" style="margin-top: 1rem;">
+    <div v-if="showExample()" class="text-center" style="margin-top: 1rem;">
       Example text to be shown under example graph. Because we all know that example without explanation is useless.
     </div>
-    <div v-else-if="showResultMessage()" :style="'margin-top: 1rem; color: ' + resultColor()">
+    <div v-else-if="showResultMessage()" class="text-center" :style="'margin-top: 1rem; color: ' + resultColor()">
       {{ resultMessage() }}
     </div>
   </span>
@@ -222,6 +222,9 @@
   overflow: hidden;
 }
 
+.text-center{
+  text-align: center;
+}
 .rotated{
   position: absolute;
   padding: 0%;

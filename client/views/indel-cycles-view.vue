@@ -1,11 +1,11 @@
 <template>
-  <div style="height: 100%">
+  <div>
     <no-data v-if="!dataAvailable" />
     <d3-line-plot
       v-else
       :data="plotData"
       :text="plotText"
-      :heightModifier="0.7"
+      :heightModifier="3"
       :resize-notification="resizeNotification"
       :args="args"
     />

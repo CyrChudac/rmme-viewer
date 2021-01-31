@@ -127,7 +127,7 @@
         const onLoad = (file, reader) => {
           const content = loadThresholds(reader.result);
 
-          //TODO: thresholds file may include file, that its attached to, but we do not implement it
+          //TODO: thresholds file may include file, that its attached to, but we do not implement it yet
 
           if(content["thresholds"]){  // user uploaded thresholds
             let newThresholds = content["thresholds"];

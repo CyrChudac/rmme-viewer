@@ -1,40 +1,26 @@
 <template>
-  <b-container
-    style="height: 100%"
-    fluid
-  >
+  <span>
     <no-data v-if="!dataAvailable" />
-    <b-row
+    <div
       v-else
-      style="height: 100%"
     >
-      <b-col
-        md="6"
-        style="height: 100%;padding: 0;"
-      >
-        <d3-line-area-plot
-          :line="ffqLineData"
-          :area="ffqAreaData"
-          :text="plotText"
-          :heightModifier=0.8
-          :resize-notification="resizeNotification"
-          :args="args"
-        />
-      </b-col>
-      <b-col
-        md="6"
-        style="height: 100%;padding: 0;"
-      >
-        <d3-line-area-plot
-          :line="lfqLineData"
-          :area="lfqAreaData"
-          :heightModifier=0.8
-          :resize-notification="resizeNotification"
-          :args="args"
-        />
-      </b-col>
-    </b-row>
-  </b-container>
+      <d3-line-area-plot
+        :line="ffqLineData"
+        :area="ffqAreaData"
+        :text="plotText"
+        :heightModifier=1.7
+        :resize-notification="resizeNotification"
+        :args="args"
+      />
+      <d3-line-area-plot
+        :line="lfqLineData"
+        :area="lfqAreaData"
+        :heightModifier=1.7
+        :resize-notification="resizeNotification"
+        :args="args"
+      />
+    </div>
+  </span>
 </template>
 
 <script>
