@@ -87,7 +87,7 @@
       >
     </div>
     <div v-if="hoveredOver < 0" style="padding-top: 1rem; text-align: center; color: gray;">
-      Hint: Hover over property name to see the thresholds meaning.
+      Hint: Hover over a property name to see the thresholds meaning.
     </div>
     <div v-if="hoveredOver >= 0" style="padding-top: 1rem; text-align: center;">
       {{ thresholdsVals[hoveredOver]["name"] + " thresholds: " + thresholdsVals[hoveredOver]["thresholds"]["legend"] }}

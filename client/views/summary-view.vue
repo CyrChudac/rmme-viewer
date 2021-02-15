@@ -21,6 +21,7 @@
         >
           <td 
             @click="setDividor(index)" 
+            @mouseenter="hoveredOver = index"
             :style="setCursor(index)"
           >
             {{ value["string"] }}
@@ -53,7 +54,9 @@
           <td>
             {{ index }}
           </td>
-          <td class="value-cell">
+          <td 
+            class="value-cell"
+          >
             <input 
               type="checkbox" 
               :id="'checkbox_' + index"
@@ -73,6 +76,12 @@
       </table>
     </div>
     <div v-else>Internal Error: no data for current inner summary view.</div>
+    <div v-if="hoveredOver < 0" style="padding-top: 1rem; text-align: center; color: gray;">
+      Hint: Hover over a property name to see it's hint.
+    </div>
+    <div v-if="hoveredOver >= 0" style="padding-top: 1rem; text-align: center;">
+      Hint string of {{included[hoveredOver]["string"]}} not set.
+    </div>
   </div>
 </template>
 
@@ -97,6 +106,7 @@
       "included": defaultIncluded(),
       "currDividor": "sequences",
       "currView": 0,
+      "hoveredOver": -1,
     }),
     "props": {
       "data": {"type": Object, "required": true}
