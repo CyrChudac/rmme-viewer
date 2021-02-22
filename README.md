@@ -2,7 +2,7 @@
 Statsview is a software for NGS data visualization. This file should answer most questions you may have regarding practical usage and the programming aspect of the software.
 
 ## How to run it?  
-I don't know yet, have to discuss it.
+I don't know yet, have to discuss it. 
 
 ## Files structure
 In the application there are 3 main type of files: .js, .vue, .scss.
