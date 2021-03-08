@@ -8,34 +8,36 @@
       <div
         v-if="currView === 0"
       >
-        <table
+        <div
           class="summary-table"
         >
-          <tr>
-            <th>Name</th>
-            <th>Value</th>
-            <th>{{"% of '" + currDividor + "'"}}</th>
-          </tr>
-          <tr
-            v-for="(value, index) in included"
-            :key="value"
-            :style="'color: ' + itemColor(value)"
-          >
-            <td 
-              @click="setDividor(index)" 
-              @mouseenter="hoveredOver = index"
-              :style="setCursor(index)"
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Value</th>
+              <th>{{"% of '" + currDividor + "'"}}</th>
+            </tr>
+            <tr
+              v-for="(value, index) in included"
+              :key="value"
+              :style="'color: ' + itemColor(value)"
             >
-              {{ value["string"] }}
-            </td>
-            <td class="value-cell">
-              {{ formatNumber(data.summary[value["string"]]) }}
-            </td>
-            <td style="padding-left: 1rem" class="value-cell">
-              {{ percents(index) }}
-            </td>
-          </tr>
-        </table>
+              <td
+                @click="setDividor(index)"
+                @mouseenter="hoveredOver = index"
+                :style="setCursor(index)"
+              >
+                {{ value["string"] }}
+              </td>
+              <td class="value-cell">
+                {{ formatNumber(data.summary[value["string"]]) }}
+              </td>
+              <td style="padding-left: 1rem" class="value-cell">
+                {{ percents(index) }}
+              </td>
+            </tr>
+          </table>
+        </div>
         <div style="padding-top: 1rem; text-align: center; color: gray;">
           Hint: click on a name to change the percents
         </div>
