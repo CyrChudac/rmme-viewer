@@ -1,15 +1,6 @@
 import Vue from "vue";
-import {
-  LayoutPlugin,
-  NavbarPlugin,
-  ButtonPlugin,
-  ListGroupPlugin,
-  FormCheckboxPlugin,
-} from "bootstrap-vue";
-
 import App from "./application";
 
-import "bootstrap-vue/dist/bootstrap-vue.css";
 import "../styles/bootstrap.scss";
 
 import {library} from "@fortawesome/fontawesome-svg-core";
@@ -26,8 +17,7 @@ import {
   faTimes,
   faTimesCircle,
   faCheckCircle,
-  faQuestionCircle,
-  faSpinner
+  faQuestionCircle
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
@@ -37,16 +27,11 @@ import "./data.js";
 library.add([
   faPlus, faMinus, faEye, faCog, faUpload, faAngleRight, faAngleLeft, faTrash,
 
-  faTimes, faTimesCircle, faCheckCircle, faQuestionCircle, faSpinner
+  faTimes, faTimesCircle, faCheckCircle, faQuestionCircle
 ]);
 
 Vue.config.productionTip = false;
 
-Vue.use(LayoutPlugin);
-Vue.use(NavbarPlugin);
-Vue.use(ButtonPlugin);
-Vue.use(ListGroupPlugin);
-Vue.use(FormCheckboxPlugin);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

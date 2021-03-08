@@ -138,8 +138,8 @@
   
   function defaultTresholds(){
     return {
-      "Bad": 8,
-      "Ok": 15,
+      "Bad": 15,
+      "Ok": 8,
       "legend": "maximal difference between maximum and minimum in the graph",
     }
   }

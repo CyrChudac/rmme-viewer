@@ -17,8 +17,6 @@ export function bestStatus(statuses){
 
 export function selectIcon(status){
     switch(status) {
-        case undefined:
-            return "fa-spinner";
         case STATUS_WARNING:
             return "question-circle";
         case STATUS_INVALID:

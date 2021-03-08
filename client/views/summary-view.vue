@@ -3,85 +3,89 @@
   style="height: 250px;"
   >
     <no-data v-if="!dataAvailable" />
-    <div
-      v-else-if="currView === 0"
-    >
-      <table
+    <span v-else>
+      <button @click="currView = (currView + 1) % 2">Mode</button>
+      <div
+        v-if="currView === 0"
+      >
+        <table
+          class="summary-table"
+        >
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>{{"% of '" + currDividor + "'"}}</th>
+          </tr>
+          <tr
+            v-for="(value, index) in included"
+            :key="value"
+            :style="'color: ' + itemColor(value)"
+          >
+            <td 
+              @click="setDividor(index)" 
+              @mouseenter="hoveredOver = index"
+              :style="setCursor(index)"
+            >
+              {{ value["string"] }}
+            </td>
+            <td class="value-cell">
+              {{ formatNumber(data.summary[value["string"]]) }}
+            </td>
+            <td style="padding-left: 1rem" class="value-cell">
+              {{ percents(index) }}
+            </td>
+          </tr>
+        </table>
+        <div style="padding-top: 1rem; text-align: center; color: gray;">
+          Hint: click on a name to change the percents
+        </div>
+        <div v-if="hoveredOver < 0" style="padding-top: 1rem; text-align: center; color: gray;">
+          Hint: Hover over a property name to see it's hint.
+        </div>
+        <div v-if="hoveredOver >= 0" style="padding-top: 1rem; text-align: center;">
+          Hint string of {{included[hoveredOver]["string"]}} not set.
+        </div>
+      </div>
+      <div
+        v-else-if="currView === 1"
         class="summary-table"
       >
-        <tr>
-          <th>Name</th>
-          <th>Value</th>
-          <th>{{"% of '" + currDividor + "'"}}</th>
-        </tr>
-        <tr
-          v-for="(value, index) in included"
-          :key="value"
-          :style="'color: ' + itemColor(value)"
-        >
-          <td 
-            @click="setDividor(index)" 
-            @mouseenter="hoveredOver = index"
-            :style="setCursor(index)"
+        <table >
+          <tr>
+            <th>Property</th>
+            <th>Displayed</th>
+            <th>Show %</th>
+          </tr>
+          <tr
+            v-for="(value, index) in data.summary"
+            :key="index"
           >
-            {{ value["string"] }}
-          </td>
-          <td class="value-cell">
-            {{ formatNumber(data.summary[value["string"]]) }}
-          </td>
-          <td style="padding-left: 1rem" class="value-cell">
-            {{ percents(index) }}
-          </td>
-        </tr>
-      </table>
-      <div style="padding-top: 1rem; text-align: center; color: gray;">
-        Hint: click on a name to change the percents
+            <td>
+              {{ index }}
+            </td>
+            <td 
+              class="value-cell"
+            >
+              <input 
+                type="checkbox" 
+                :ref="'checkbox_' + index"
+                :checked="includedIncludes(index)"
+                @click="includeCheckChanged(index)"
+              >
+            </td>
+            <td style="padding-left: 1rem" class="value-cell">
+              <input
+                type="checkbox" 
+                :ref="'checkbox_perc_' + index"
+                :checked="percentVal(index)"
+                @click="percentsCheckChanged(index, $event)"
+              >
+            </td>
+          </tr>
+        </table>
       </div>
-    </div>
-    <div
-      v-else-if="currView === 1"
-    >
-      <table class="summary-table" style="overflow: auto">
-        <tr>
-          <th>Property</th>
-          <th>Displayed</th>
-          <th>Show %</th>
-        </tr>
-        <tr
-          v-for="(value, index) in data.summary"
-          :key="index"
-        >
-          <td>
-            {{ index }}
-          </td>
-          <td 
-            class="value-cell"
-          >
-            <input 
-              type="checkbox" 
-              :id="'checkbox_' + index"
-              :checked="includedIncludes(index)"
-              @click="includeCheckChanged(index)"
-            >
-          </td>
-          <td style="padding-left: 1rem" class="value-cell">
-            <input
-              type="checkbox" 
-              :id="'checkbox_perc_' + index"
-              :checked="percentVal(index)"
-              @click="percentsCheckChanged(index + ' perc_click', $event)"
-            >
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div v-else>Internal Error: no data for current inner summary view.</div>
-    <div v-if="hoveredOver < 0" style="padding-top: 1rem; text-align: center; color: gray;">
-      Hint: Hover over a property name to see it's hint.
-    </div>
-    <div v-if="hoveredOver >= 0" style="padding-top: 1rem; text-align: center;">
-      Hint string of {{included[hoveredOver]["string"]}} not set.
-    </div>
+      <div v-else>Internal Error: no data for current inner summary view.</div>
+    </span>
   </div>
 </template>
 
@@ -105,7 +109,7 @@
     "data": () => ({
       "included": defaultIncluded(),
       "currDividor": "sequences",
-      "currView": 0,
+      "currView": 1,
       "hoveredOver": -1,
     }),
     "props": {
@@ -182,7 +186,8 @@
         }
       },
       "includeCheckChanged": function(string){
-        let checked =  this.$refs["checkbox_" + string].checked;
+        let checked = this.$refs["checkbox_" + string][0].checked;
+        console.log(checked);
         if(checked){
           this.includeCheck(string);
         }else{
@@ -190,15 +195,15 @@
         }
       },
       "includeCheck": function(string){
-        included.push({
+        this.included.push({
           "string": string
         });
       },
       "includeUncheck": function(string){
-        included = included.filter((s) => s["string"] != string);
+        this.included = this.included.filter((s) => s["string"] != string);
       },
       "percentsCheckChanged": function(string){
-        let checked = document.getElementById("checkbox_perc_" + string).checked;
+        let checked = this.$refs["checkbox_perc_" + string][0].checked;
         if(checked){
           this.percentsCheck(string);
         }else{
@@ -323,6 +328,8 @@
 <style scoped>
   .summary-table {
     margin-left: 2rem;
+    overflow: auto;
+    max-height: 450px;
   }
 
   .value-cell {

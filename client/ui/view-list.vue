@@ -21,10 +21,7 @@
 </template>
 
 <script>
-  import {STATUS_OK,
-   STATUS_WARNING,
-   STATUS_INVALID,
-   STATUS_NONE,
+  import {
    selectIcon,
    selectColor,
    selectVariant} from "./../data-status";

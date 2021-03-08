@@ -164,7 +164,7 @@
       let curr = unifiedRound(usedArray[i]);
       let prev = unifiedRound(usedArray[i + 1] * ignore);
       if( curr >= prev){
-        prevLocMinIndex = i;
+        prevLocMinIndex = i + 1;
         break;
       }
     }
@@ -172,7 +172,7 @@
       let curr = unifiedRound(usedArray[i]);
       let prev = unifiedRound(usedArray[i - 1] * ignore);
       if(curr >= prev){
-        nextLocMinIndex = i;
+        nextLocMinIndex = i - 1;
         break;
       }
     }

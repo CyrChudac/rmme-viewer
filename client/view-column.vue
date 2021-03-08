@@ -28,42 +28,49 @@
         :menu-data="menuData[1]"
         :options="options"
         :resize-notification="resizeNotification"
+        class="inner-view-column"
       />
       <gc-content-view
         v-else-if="activeView === 2"
         :data="data"
         :options="options"
         :resize-notification="resizeNotification"
+        class="inner-view-column"
       />
       <indel-cycle-view
         v-else-if="activeView === 3"
         :data="data"
         :options="options"
         :resize-notification="resizeNotification"
+        class="inner-view-column"
       />
       <insert-size-view
         v-else-if="activeView === 4"
         :data="data"
         :options="options"
         :resize-notification="resizeNotification"
+        class="inner-view-column"
       />
       <quality-2-view
         v-else-if="activeView === 5"
         :data="data"
         :options="options"
         :resize-notification="resizeNotification"
+        class="inner-view-column"
       />
       <quality-3-view
         v-else-if="activeView === 6"
         :data="data"
         :options="options"
         :resize-notification="resizeNotification"
+        class="inner-view-column"
       />
       <gc-depth
         v-else-if="activeView === 7"
         :data="data"
         :options="options"
         :resize-notification="resizeNotification"
+        class="inner-view-column"
       />
       <thresholds
         v-else-if="activeView === 8"
@@ -241,6 +248,7 @@
   text-align: right;
   padding: 0%;
   margin: 0%;
+  margin-top: 70%;
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
@@ -248,6 +256,10 @@
 
 .bordered{
   border: 1px solid blue;
+}
+
+.inner-view-column{
+  margin-left: 20px;
 }
 
 .cross{
