@@ -1,109 +1,108 @@
 <template>
-<span class="outer-background">
-  <div class="whole-app">
-    <span
-      class="p-0 bg-white"
-      fluid="sm" 
-    >
+  <span class="outer-background">
+    <div class="whole-app">
       <span
-        toggleable="lg"
-        type="light"
-        variant="right"
-        class="navbar navbar-height"
+        fluid="sm"
       >
-        <span href="#" class="navbar-brand left">
-          RMME Viewer
-        </span>
-        <span class="navbar-upload left">
-          <input
-            id="files"
-            type="file"
-            name="files"
-            class="file-upload"
-            multiple
-            @change="onUploadFiles"
-          >
-          <label for="files">
-            <div class="btn file-upload-button">
-              <font-awesome-icon icon="upload" />
-            </div>
-          </label>
-        </span>
-        <span class="navbar-nav left">
-          <span style="margin-right: 1rem; margin-left: 1rem">
-            <b>Active file:</b> {{ files[activeFileIndex]["label"] }}
+        <span
+          toggleable="lg"
+          type="light"
+          variant="right"
+          class="navbar navbar-height"
+        >
+          <span href="#" class="navbar-brand left">
+            RMME Viewer
           </span>
-        </span>
-        <span class="navbar-nav ml-auto right">
-          <example-text-list 
-            v-model="activeExample"
-            :data="activeViewExamples"
-          />
-        </span>
-        <span class="navbar-nav ml-auto right">
-          <acgt-cycles-view-menu
-            v-if="activeViewIndex === 1"
-            :data="menuData[1]"
-          />
-        </span>
-      </span>
-      <span
-        fluid
-      >
-        <span>
-          <span
-            v-if="showFileList"
-            :sm="6"
-            :md="2"
-            :class="{active: activeList === 0}"
-            class="scroll-window c-col"
-          >
-            <file-list
-              v-model="activeFileIndex"
-              :files="files"
-              @delete="onDeleteFile"
+          <span class="navbar-upload left">
+            <input
+              id="files"
+              type="file"
+              name="files"
+              class="file-upload"
+              multiple
+              @change="onUploadFiles"
+            >
+            <label for="files">
+              <div class="btn file-upload-button">
+                <font-awesome-icon icon="upload" />
+              </div>
+            </label>
+          </span>
+          <span class="navbar-nav left">
+            <span style="margin-right: 1rem; margin-left: 1rem">
+              <b>Active file:</b> {{ files[activeFileIndex]["label"] }}
+            </span>
+          </span>
+          <span class="navbar-nav ml-auto right">
+            <example-text-list
+              v-model="activeExample"
+              :data="activeViewExamples"
             />
           </span>
-          <span
-            v-if="showViewList"
-            :sm="6"
-            :md="2"
-            :class="{active: activeList === 1}"
-            class="scroll-window c-col"
-          >
-            <view-list
-              style="overflow: hidden; resize: none"
-              v-on:change-view-index="changeViewIndex($event)"
-              :views="views"
+          <span class="navbar-nav ml-auto right">
+            <acgt-cycles-view-menu
+              v-if="activeViewIndex === 1"
+              :data="menuData[1]"
             />
           </span>
-          <left-view-menu-column
-            :files="showFileList"
-            :views="showViewList"
-            @toggleFiles="onToggleFiles"
-            @toggleViews="onToggleViews"
-            class="c-col"
-          />
+        </span>
+        <span
+          fluid
+        >
           <span>
-            <view-column
-              :active-view="activeViewIndex"
-              :data="activeViewData"
-              :menu-data="menuData"
-              :options="options"
-              :resize-notification="resizeNotification"
-              :width="viewColumnWidth"
-              :activeExample="activeExample"
-              :thresholdsValues="thresholds"
-              v-on:reset-example="activeExample = -1"
-              v-on:change-thresholds="thresholds = $event.target.value"
+            <span
+              v-if="showFileList"
+              :sm="6"
+              :md="2"
+              :class="{active: activeList === 0}"
+              class="scroll-window c-col"
+            >
+              <file-list
+                v-model="activeFileIndex"
+                :files="files"
+                @delete="onDeleteFile"
+              />
+            </span>
+            <span
+              v-if="showViewList"
+              :sm="6"
+              :md="2"
+              :class="{active: activeList === 1}"
+              class="scroll-window c-col"
+            >
+              <view-list
+                style="overflow: hidden; resize: none"
+                v-on:change-view-index="changeViewIndex($event)"
+                :views="views"
+              />
+            </span>
+            <left-view-menu-column
+              :files="showFileList"
+              :views="showViewList"
+              @toggleFiles="onToggleFiles"
+              @toggleViews="onToggleViews"
               class="c-col"
             />
+            <span>
+              <view-column
+                :active-view="activeViewIndex"
+                :data="activeViewData"
+                :menu-data="menuData"
+                :options="options"
+                :resize-notification="resizeNotification"
+                :width="viewColumnWidth"
+                :activeExample="activeExample"
+                :thresholdsValues="thresholds"
+                v-on:reset-example="activeExample = -1"
+                v-on:change-thresholds="thresholds = $event.target.value"
+                class="c-col"
+              />
+            </span>
           </span>
         </span>
       </span>
-    </span>
-  </div>
-</span>
+    </div>
+  </span>
 </template>
 
 <script>
