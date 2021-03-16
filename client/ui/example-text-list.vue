@@ -6,7 +6,7 @@
   >
     <span
      class="dropbtn example-btn"
-     @click="myToggle()"
+     @click="toggleExamplesDropdown()"
      right
     >
         Examples ▾
@@ -45,10 +45,10 @@
       "onDeselect": function () {
         this.$emit("input", -1)
       },
-      "myToggle": function(){
+      "toggleExamplesDropdown": function(){
         this.classNone.val = ! this.classNone.val;
         if (!quiet){
-          console.log("myToggle -> showExamples: " + this.classNone.val + " -> \"" + this.noneIncluded() + "\"");
+          console.log("toggleExamplesDropdown -> showExamples: " + this.classNone.val + " -> \"" + this.noneIncluded() + "\"");
         }
       },
       "noneIncluded": function(innerQuiet = true){

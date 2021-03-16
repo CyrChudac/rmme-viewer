@@ -256,6 +256,7 @@
 
 .bordered{
   border: 1px solid blue;
+  box-shadow: 0 3px 6px 0 lightblue;
 }
 
 .inner-view-column{
@@ -265,6 +266,7 @@
 .cross{
   position: absolute;
   right: 0;
+  box-shadow: 2px 2px 2px 0 red;
   top: 0;
   text-align: center;
   width: 1.4rem;
@@ -272,5 +274,10 @@
   background-color: darkorange;
   color: red;
   cursor: pointer;
+}
+
+.cross:hover{
+  background-color: red;
+  color: darkred;
 }
 </style>

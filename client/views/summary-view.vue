@@ -4,7 +4,12 @@
   >
     <no-data v-if="!dataAvailable" />
     <span v-else>
-      <button @click="currView = (currView + 1) % 2">Mode</button>
+      <button 
+        style="margin-bottom: 1rem;" 
+        @click="currView = (currView + 1) % 2"
+      >
+        Mode
+      </button>
       <div
         v-if="currView === 0"
       >
