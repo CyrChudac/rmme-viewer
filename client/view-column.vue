@@ -221,63 +221,63 @@
 
 <style scoped>
 
-.view-column{
-  padding-left: 2rem;
-  padding-top: 1.1rem;
-  margin-top: 0.8rem;
-  margin-left: 2.2rem;
-  overflow: hidden;
-}
+  .view-column{
+    padding-left: 2rem;
+    padding-top: 1.1rem;
+    margin-top: 0.8rem;
+    margin-left: 2.2rem;
+    overflow: hidden;
+  }
 
-.text-center{
-  text-align: center;
-}
-.rotated{
-  position: absolute;
-  padding: 0%;
-  margin: 0%;
-  -webkit-transform-origin: 0% 100%;
-  -ms-transform-origin: 0% 100%;
-  transform-origin:0% 100%;
-  -webkit-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-}
+  .text-center{
+    text-align: center;
+  }
+  .rotated{
+    position: absolute;
+    padding: 0%;
+    margin: 0%;
+    -webkit-transform-origin: 0% 100%;
+    -ms-transform-origin: 0% 100%;
+    transform-origin:0% 100%;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
 
-.upside-down{
-  text-align: right;
-  padding: 0%;
-  margin: 0%;
-  margin-top: 70%;
-  -webkit-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
+  .upside-down{
+    text-align: right;
+    padding: 0%;
+    margin: 0%;
+    margin-top: 70%;
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
 
-.bordered{
-  border: 1px solid blue;
-  box-shadow: 0 3px 6px 0 lightblue;
-}
+  .bordered{
+    border: 1px solid blue;
+    box-shadow: 0 3px 6px 0 lightblue;
+  }
 
-.inner-view-column{
-  margin-left: 20px;
-}
+  .inner-view-column{
+    margin-left: 20px;
+  }
 
-.cross{
-  position: absolute;
-  right: 0;
-  box-shadow: 2px 2px 2px 0 red;
-  top: 0;
-  text-align: center;
-  width: 1.4rem;
-  height: 1.4rem;
-  background-color: darkorange;
-  color: red;
-  cursor: pointer;
-}
+  .cross{
+    position: absolute;
+    right: 0;
+    box-shadow: 2px 2px 2px 0 red;
+    top: 0;
+    text-align: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-color: darkorange;
+    color: red;
+    cursor: pointer;
+  }
 
-.cross:hover{
-  background-color: red;
-  color: darkred;
-}
+  .cross:hover{
+    background-color: red;
+    color: darkred;
+  }
 </style>

@@ -1,8 +1,11 @@
 <template>
-  <span>
+  <span
+    style="margin-left: 20px;"
+  >
     <no-data v-if="!dataAvailable" />
     <div
       v-else
+      style="margin-left: inherit;"
     >
       <d3-line-plot
         :data="ffqData"
