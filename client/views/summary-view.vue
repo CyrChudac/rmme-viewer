@@ -116,7 +116,7 @@
     "data": () => ({
       "included": defaultIncluded(),
       "currDividor": "sequences",
-      "currView": 1,
+      "currView": 0,
       "hoveredOver": -1,
     }),
     "props": {
@@ -297,7 +297,7 @@
     }
   }
 
-  //ok if mapped > 90%, only 02% error ratio, mapped and paired > 80%
+  //ok if mapped > 90%, only 0.02% error ratio, mapped and paired > 80%
   function validateData(data, thresholds, forceCompute=false) {
     data = selectData(data);
     if(data["status"] && !forceCompute){
@@ -306,7 +306,7 @@
       let status;
       let message = "";
       if(data["bases mapped (cigar)"] / data["total length"] < 0.9){
-        message += "reads mapped\n";
+        message += "bases mapped\n";
       }
       if(data["error rate"] > 0.0002){
         message += "error rate\n";

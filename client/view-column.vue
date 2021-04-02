@@ -141,7 +141,7 @@
         case 1:
           return "% representation of bases";
         default:
-          return this.defaultCaption("X");
+          return this.defaultCaption("Y");
         }
       },
       //inner function - it will not exist in the final 

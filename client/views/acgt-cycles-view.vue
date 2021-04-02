@@ -121,7 +121,7 @@
     }
   }
 
-  function validateData(data, thresholds, forceCompute=false) {
+  function validateData(data, thresholds, forceCompute=false, quiet = true) {
     data = selectData(data);
     if(data["status"] && !forceCompute){
       return data["status"];
@@ -129,10 +129,12 @@
     {
       let status = STATUS_OK;
       let message = "";
+      let maxim = 0; 
       for (let index = 0; index < data["count"]; ++index) {
         let CG = Math.abs(data["C"][index] - data["G"][index]);
         let AT = Math.abs(data["A"][index] - data["T"][index]);
         let ma = Math.max(CG,AT);
+        maxim = Math.max(ma, maxim);
         if(thresholds["Ok"] >= ma){
           continue;
         }
@@ -149,6 +151,9 @@
           message += (CG > AT ? "G-C" : "A-T") + " on cycle " + index + ", ";
           status = STATUS_INVALID;
         }
+      }
+      if(!quiet){
+        console.log("ACGT cycles: maximal difference is " + maxim + "%");
       }
       if(status != STATUS_OK){
         message = "Folowing pairs are too far from each other:\n" + message;

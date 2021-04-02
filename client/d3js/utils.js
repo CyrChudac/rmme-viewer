@@ -39,7 +39,7 @@ window.addEventListener('resize', () => longTimeParentHeight = 0);
 
 let minParHeight = 100;
 let longTimeParentHeight = 0;
-export function computeLayout(margin, size, heightModifier, args = {}) {
+export function computeLayout(margin, size, heightModifier, args = {}, quiet = true) {
   if(longTimeParentHeight == 0){
     longTimeParentHeight = Math.max(size.height, minParHeight);
   }
@@ -48,9 +48,11 @@ export function computeLayout(margin, size, heightModifier, args = {}) {
     "yLevels": 1,
     ...args,
   };
-  console.log("compute layout - width = " + 
-    "(" + size.width + " / " + args.yLevels + ") - "  + margin.left + " - " + margin.right + " = " +
-   ((size.width / args.xLevels) - margin.left - margin.right));
+  if(!quiet){
+    console.log("compute layout - width = " + 
+      "(" + size.width + " / " + args.yLevels + ") - "  + margin.left + " - " + margin.right + " = " +
+    ((size.width / args.xLevels) - margin.left - margin.right));
+  }
   return {
     "width": (size.width / args.xLevels) - margin.left - margin.right,
     "height": (longTimeParentHeight * heightModifier / args.yLevels) - margin.top - margin.bottom,

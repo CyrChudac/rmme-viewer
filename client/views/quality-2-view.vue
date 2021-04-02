@@ -173,7 +173,7 @@
           status = STATUS_INVALID;
         }
         message = "Property is considered " + state + ", because difference(" + diff + 
-          ") between maximal(" + max + ") and minmal(" + min + ") value is too large."
+          ") between maximal(" + max + ") and minimal(" + min + ") value is too large."
       }
       let result = {
         "status": status,

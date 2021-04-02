@@ -112,6 +112,14 @@
       let message = "";
 
       let sData = halfSmoothenData(data);
+      for(let i = 0; i < sData["count"]; i++){
+        /*/
+        console.log(sData["deletionsFwd"][i]);
+        console.log(sData["insertionsRev"][i]);
+        console.log(sData["deletionsFwd"][i]);
+        console.log(sData["deletionsRev"][i]);
+        /**/
+      }
       for (let index = jump; index < sData["count"] - jump; ++index) {
         let curr = validateSpecificIndex(index, sData, thresholds);
         if(curr["status"] === STATUS_INVALID){
@@ -130,10 +138,9 @@
         let state = "!!!UNKNOWN STATE!!!";
         if(status === STATUS_WARNING){
           state = "suspecious";
-        }else if(state === STATUS_INVALID){
+        }else if(status === STATUS_INVALID){
           state = "wrong";
         }
-        
         message = "Folowing fragments are considered " + state + ":\n" + message;
       }
       let result = {
@@ -195,20 +202,17 @@
     let min = Math.min(...data[string].slice(prevIndex, index - 1), ...data[string].slice(index + 1, upcomIndex));
     let max = Math.max(previous, upcoming);
 
+    /*/
+      console.log("indel-cycles-" + string +" :-  "
+        + index + ": " + currVal + " not in (" + min * (1 - (thresholds["Ok"]/100)) + ", "
+        + max * (1 + (thresholds["Ok"]/100)) + ")");
+    /**/
     if(currVal > min * (1 - (thresholds["Ok"]/100)) && currVal < max * (1 + (thresholds["Ok"]/100))){
       return STATUS_OK;
     }
     else if (currVal > min * (1 - (thresholds["Bad"]/100)) && currVal < max * (1 + (thresholds["Bad"]/100))){
       return STATUS_WARNING;
     }else{
-      /*/
-      //uncomment to get console output
-
-      console.log("indel-cycles status_invalid reason:");
-      console.log("previous: " + previous + ", upcoming:" + upcoming);
-      console.log("indel-cycles :-  " + index + ": " + currVal + " not in (" + min * (1 - (thresholds["Bad"]/100)) + ", "
-       + max * (1 + (thresholds["Bad"]/100)) + ")");
-      /**/
       return STATUS_INVALID;
     }
   }

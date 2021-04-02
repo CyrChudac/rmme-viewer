@@ -173,22 +173,20 @@
     let min = Math.min(previousY, upcomingY);
     let max = Math.max(previousY, upcomingY);
 
-    if((currVal > min && currVal < max) || isTresholdOk(thresholds["Ok"], currVal, average)){
+    if(isTresholdOk(thresholds["Ok"], currVal, average)){
       return STATUS_OK;
     }
     else if (isTresholdOk(thresholds["Bad"], currVal, average)){
+      return STATUS_WARNING;
+    }else{
       /*/
       //uncomment to activate console output
       
-      console.log("gc-content mediocre_status reasons:")
-      console.log()
-      console.log(currX + ": " + currVal + " not in (" + average * (1 - (thresholds["Bad"]/100)) + ", "
+      console.log(index + ", " + currX + ": " + currVal + " not in (" + average * (1 - (thresholds["Bad"]/100)) + ", "
        + average * (1 + (thresholds["Bad"]/100)) + ") - average = " + average + " (all rounded by unifiedRound)");
       console.log(average + " = (" + previousY + " * " + " (" + upcomingX + " - " + currX + ") + "
        + upcomingY + " * (" + currX + " - " + previousX + ")) / (" + upcomingX + " - " + previousX + ")");
       /**/
-      return STATUS_WARNING;
-    }else{
       return STATUS_INVALID;
     }
   }

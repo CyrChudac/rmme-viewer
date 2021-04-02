@@ -11,7 +11,7 @@
           class="navbar navbar-height"
         >
           <span href="#" class="navbar-brand left">
-            RMME Viewer
+            STATSVIEW
           </span>
           <span class="navbar-upload left">
             <input

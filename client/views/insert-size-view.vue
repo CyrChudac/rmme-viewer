@@ -106,18 +106,33 @@
   let peakCountedPart = 0.5;
 
   //algorithm finds local minimums to both sides from global maximum, ignore lets it ignore some small local minimums
-  let ignore = 1.05;
-
+  let ignore = 1.01;
+  let quiet = true;
   function validateData(data, thresholds, forceCompute=false) {
     data = selectData(data);
     if(data["status"] && !forceCompute){
       return data["status"];
     }else{
-      let usedString = "pairsTotal";
+      let usedString = areaUsedString;
       let usedArray = smoothenArray(data[usedString]);
-      let maxIndex = indexOfMax(usedArray);
+      let maxIndex = indexOfMax(data[usedString]);
+      if(!quiet){
+        /**/
+        console.log("usedArray:")
+        for(let i = 0; i < usedArray.length; i++){
+          console.log(usedArray[i]);
+        }
+        /**/
+        console.log("wholeArea");
+      }
       let wholeArea = areaUnderLineInRange(data, 0, data["insertSize"].length - 1);
-      let areaValue = areaAroundMaxValue(data, maxIndex, thresholds);
+      if(!quiet){
+        console.log("areaAroundMainValue");
+      }
+      let areaValue = areaAroundMaxValue(data, maxIndex);
+      if(!quiet){
+        console.log("areaUnderMainPeak");
+      }
       let areaPeak = areaUnderMainPeak(data, maxIndex, usedArray);
       let peakPercents = unifiedRound(areaPeak/wholeArea);
       let valuePercents = unifiedRound(areaValue/wholeArea);
@@ -168,6 +183,10 @@
         break;
       }
     }
+    if(!quiet){
+      console.log("max index = " + maxIndex);
+      console.log("prevLocMinIndex = " + prevLocMinIndex);
+    }
     for(let i = maxIndex + 1; i < usedArray.length - 1; i++){   //looking for local minimum after max
       let curr = unifiedRound(usedArray[i]);
       let prev = unifiedRound(usedArray[i - 1] * ignore);
@@ -176,16 +195,20 @@
         break;
       }
     }
-    return areaUnderLineInRange(data,
-       Math.round(maxIndex - peakCountedPart*(maxIndex - prevLocMinIndex)),
-       Math.round(maxIndex + peakCountedPart*(nextLocMinIndex - maxIndex)));
+    let minim = Math.round(maxIndex - peakCountedPart*(maxIndex - prevLocMinIndex));
+    let maxim = Math.round(maxIndex + peakCountedPart*(nextLocMinIndex - maxIndex));
+    if(!quiet){
+      console.log("prev = " + prevLocMinIndex + ", next = " + nextLocMinIndex + 
+        " => area(" + minim + ", " + maxim + ")");
+    }
+    return areaUnderLineInRange(data, minim, maxim);
   }
 
-  function areaAroundMaxValue(data, maxIndex, thresholds){
+  function areaAroundMaxValue(data, maxIndex){
     let string = "insertSize";
     let max = data[string][maxIndex];
-    let smaller = max * (1 - peakCountedPart/2);
-    let bigger = max * (1 + peakCountedPart/2);
+    let smaller = (max - data[string][0]) * (1 - peakCountedPart/2);
+    let bigger = max + (data[string][data[string].length - 1] - max) * (1 - peakCountedPart/2);
     let smallerIndex = -1;
     let biggerIndex = -1;
     for(let i = 0; i < data[string].length; i++){ // TODO: find the indexes by binary search
@@ -203,12 +226,18 @@
   }
 
   //end is inclusive
+  let areaUsedString = "inwardOrientedPairs";
   function areaUnderLineInRange(data, start, end){
     let result = 0;
     for(let i = start; i < end - 1; i++){
-      let min = Math.min(data["inwardOrientedPairs"][i], data["inwardOrientedPairs"][i + 1]);
-      result += min*(data["insertSize"][i + 1] - data["insertSize"][i]);
-      result += Math.abs(data["inwardOrientedPairs"][i] - data["inwardOrientedPairs"][i + 1]) / 2;
+      let min = Math.min(data[areaUsedString][i], data[areaUsedString][i + 1]);
+      let length = (data["insertSize"][i + 1] - data["insertSize"][i]);
+      let add = min*length;
+      add += Math.abs(data[areaUsedString][i] - data[areaUsedString][i + 1])*length / 2;
+      result += add;
+    }
+    if(!quiet){
+      console.log("RESULT = " + (result/(end-start)) + "*(" + end + "-" + start + ") = " + result);
     }
     return result;
   }
