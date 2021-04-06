@@ -333,7 +333,7 @@ function roundedIndex(values, value) {
  * svg focus elements) is equal to data.
  */
 export function focusMouseMoveMultiDataStrategy(
-  svg, x, y, data, args, focusNodes) {
+  svg, x, y, data, args, focusNodes, ignore, units) {
 
   assert(focusNodes.length === data.length,
     "Number of data and focus nodes need to be equal.");
@@ -368,7 +368,7 @@ export function focusMouseMoveMultiDataStrategy(
 
       const activeText = focusTextNodes[index];
       activeText
-        .html(args.focusLabel(dataRecord, valueY, "UNITS"))
+        .html(args.focusLabel(dataRecord, valueY, units))
         .attr("x", x(valueX) + 15)
         .attr("y", y(valueY) - 5)
     }

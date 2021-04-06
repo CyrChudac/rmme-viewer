@@ -117,26 +117,23 @@
       let usedArray = smoothenArray(data[usedString]);
       let maxIndex = indexOfMax(data[usedString]);
       if(!quiet){
-        /**/
+        /*/
         console.log("usedArray:")
         for(let i = 0; i < usedArray.length; i++){
           console.log(usedArray[i]);
         }
         /**/
-        console.log("wholeArea");
       }
       let wholeArea = areaUnderLineInRange(data, 0, data["insertSize"].length - 1);
-      if(!quiet){
-        console.log("areaAroundMainValue");
-      }
       let areaValue = areaAroundMaxValue(data, maxIndex);
-      if(!quiet){
-        console.log("areaUnderMainPeak");
-      }
       let areaPeak = areaUnderMainPeak(data, maxIndex, usedArray);
       let peakPercents = unifiedRound(areaPeak/wholeArea);
       let valuePercents = unifiedRound(areaValue/wholeArea);
       let percents = Math.min(peakPercents, valuePercents);
+
+      if(!quiet){
+        console.log("insert-size % = " + percents*100);
+      }
 
       let status;
       let message = "";
@@ -183,10 +180,6 @@
         break;
       }
     }
-    if(!quiet){
-      console.log("max index = " + maxIndex);
-      console.log("prevLocMinIndex = " + prevLocMinIndex);
-    }
     for(let i = maxIndex + 1; i < usedArray.length - 1; i++){   //looking for local minimum after max
       let curr = unifiedRound(usedArray[i]);
       let prev = unifiedRound(usedArray[i - 1] * ignore);
@@ -197,10 +190,6 @@
     }
     let minim = Math.round(maxIndex - peakCountedPart*(maxIndex - prevLocMinIndex));
     let maxim = Math.round(maxIndex + peakCountedPart*(nextLocMinIndex - maxIndex));
-    if(!quiet){
-      console.log("prev = " + prevLocMinIndex + ", next = " + nextLocMinIndex + 
-        " => area(" + minim + ", " + maxim + ")");
-    }
     return areaUnderLineInRange(data, minim, maxim);
   }
 
@@ -211,12 +200,14 @@
     let bigger = max + (data[string][data[string].length - 1] - max) * (1 - peakCountedPart/2);
     let smallerIndex = -1;
     let biggerIndex = -1;
-    for(let i = 0; i < data[string].length; i++){ // TODO: find the indexes by binary search
-      if(smallerIndex < 0){
-        if(data[string][i] > smaller){
-          smallerIndex = i;
-        }
+    // TODO: find the indexes by binary search - only possible if string remains as 'insert size'
+    for(let i = 0; i < maxIndex; i++){ 
+      if(data[string][i] > smaller){
+        smallerIndex = i;
+        break;
       }
+    }
+    for(let i = data["count"] - 1; i > maxIndex; i--){ 
       if(data[string][i] > bigger){
           biggerIndex = i;
           break;
@@ -237,7 +228,7 @@
       result += add;
     }
     if(!quiet){
-      console.log("RESULT = " + (result/(end-start)) + "*(" + end + "-" + start + ") = " + result);
+      //console.log("RESULT = " + (result/(end-start)) + "*(" + end + "-" + start + ") = " + result);
     }
     return result;
   }

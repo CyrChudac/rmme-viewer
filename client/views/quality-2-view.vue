@@ -143,6 +143,8 @@
       "legend": "maximal difference between maximum and minimum in the graph",
     }
   }
+
+  let quiet = true;
   function validateData(data, thresholds, forceCompute=false) {
     data = selectData(data);
     if(data["status"] && !forceCompute){
@@ -157,6 +159,10 @@
 
       let diff = max - min;
       diff = unifiedRound(diff);
+
+      if(!quiet){
+        console.log("quiality-2 diff = " + diff);
+      }
 
       let status;
       let message;

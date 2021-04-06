@@ -6,8 +6,8 @@ export function rangeByStep(minValue, maxValue, stepSize) {
   return values;
 }
 
-export function unifiedRound(num){
-  return Math.round(num*1000)/1000;
+export function unifiedRound(num, dividor = 1000){
+  return Math.round(num*dividor)/dividor;
 }
 
 //replaces all values with Moving average of values around

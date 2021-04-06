@@ -103,7 +103,8 @@
       "legend": "maximal % difference of actual value and average of surounding ones"
     }
   }
-
+  
+  let quiet = true;
   function validateData(data, thresholds, forceCompute=false) {
     data = selectData(data);
     if(data["status"] && !forceCompute){
@@ -134,6 +135,10 @@
         "message": message,
       }
       data["status"] = result;
+      if(!quiet){
+        console.log("maximal difference in GC content was " + unifiedRound(maxDiff*100) + "%");
+        //console.log(diffMessage);
+      }
       return result;
     }
   }
@@ -169,15 +174,13 @@
     let upcomingX = data[stringX][upcomIndex];
 
     let distance = upcomingX - previousX; 
-    let average = (previousY * (upcomingX - currX) + upcomingY * (currX-previousX))/distance;
-    let min = Math.min(previousY, upcomingY);
-    let max = Math.max(previousY, upcomingY);
-
-    if(isTresholdOk(thresholds["Ok"], currVal, average)){
-      return STATUS_OK;
+    let average = (previousY * (upcomingX - currX) + upcomingY * (currX - previousX))/distance;
+    let status;
+    if(isTresholdOk(thresholds["Ok"], currVal, average, currX)){
+      status = STATUS_OK;
     }
-    else if (isTresholdOk(thresholds["Bad"], currVal, average)){
-      return STATUS_WARNING;
+    else if (isTresholdOk(thresholds["Bad"], currVal, average, currX)){
+      status = STATUS_WARNING;
     }else{
       /*/
       //uncomment to activate console output
@@ -187,11 +190,27 @@
       console.log(average + " = (" + previousY + " * " + " (" + upcomingX + " - " + currX + ") + "
        + upcomingY + " * (" + currX + " - " + previousX + ")) / (" + upcomingX + " - " + previousX + ")");
       /**/
-      return STATUS_INVALID;
+      status = STATUS_INVALID;
     }
+    return status;
   }
 
-  function isTresholdOk(treshold, currVal, average){
+  let maxDiff = 0;
+  let diffMessage = "no message yet";
+  function isTresholdOk(treshold, currVal, average, index){
+    if(!quiet){
+      if(average != 0 && currVal != 0 
+      && unifiedRound(average, 1000) != 0 && unifiedRound(currVal, 1000) != 0){
+        let diff = 1 - currVal / average;
+        if (Math.abs(diff) > Math.abs(maxDiff)){
+          maxDiff = diff;
+          diffMessage = index + ": 1 - (" + currVal + " / " + average + ") = " + diff
+            + "\n" + currVal + " >= " + unifiedRound(average * (1 - (treshold/100)))
+            + "\n" + currVal + " <= " + unifiedRound(average * (1 + (treshold/100)))
+            ;
+        }
+      }
+    }
     currVal = unifiedRound(currVal);
     return currVal >= unifiedRound(average * (1 - (treshold/100)))
      && currVal <= unifiedRound(average * (1 + (treshold/100)));

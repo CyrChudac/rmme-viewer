@@ -132,16 +132,36 @@
         switch(this.activeView){
           case 1:
             return "Cycle";
+          case 2:
+            return "GC content";
+          case 3:
+            return "Cycle";
+          case 4:
+            return "Insert size";
+          case 5:
+            return "Cycle";
+          case 7:
+            return "% of mapped sequnces ordered by GC content";
           default:
             return this.defaultCaption("X");
         }
       },
       "yCaption": function () {
         switch(this.activeView){
-        case 1:
-          return "% representation of bases";
-        default:
-          return this.defaultCaption("Y");
+          case 1:
+            return "% representation of bases";
+          case 2:
+            return "Normalized frequency";
+          case 3:
+            return "Indel count";
+          case 4:
+            return "Number of pairs";
+          case 5:
+            return "Quality";
+          case 7:
+            return "Mapped depth";
+          default:
+            return this.defaultCaption("Y");
         }
       },
       //inner function - it will not exist in the final 

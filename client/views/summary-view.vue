@@ -194,7 +194,6 @@
       },
       "includeCheckChanged": function(string){
         let checked = this.$refs["checkbox_" + string][0].checked;
-        console.log(checked);
         if(checked){
           this.includeCheck(string);
         }else{

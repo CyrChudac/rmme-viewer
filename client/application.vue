@@ -315,8 +315,6 @@
           reader.onload = () => onLoad(file, reader);
           reader.readAsText(file);
         }
-        this.activeFileIndex = futureIndex;
-        this.activeViewIndex = this.activeViewIndex;
       },
       "onDeleteFile": function (index) {
         this.files.splice(index, 1);

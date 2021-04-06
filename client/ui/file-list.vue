@@ -39,7 +39,6 @@
     },
     "methods": {
       "onSelect": function (index) {
-        this.index = index;
         this.$emit("input", index);
       },
       "onDelete": function (index) {

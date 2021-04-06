@@ -121,7 +121,8 @@
     }
   }
 
-  function validateData(data, thresholds, forceCompute=false, quiet = true) {
+  let quiet = true;
+  function validateData(data, thresholds, forceCompute=false) {
     data = selectData(data);
     if(data["status"] && !forceCompute){
       return data["status"];

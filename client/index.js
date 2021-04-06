@@ -21,7 +21,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-import "./data.js";
+/**/
+  import "./data.js";
+/*/
+  import "../test/data-pass.js";
+/**/
 
 // Add icons we need.
 library.add([

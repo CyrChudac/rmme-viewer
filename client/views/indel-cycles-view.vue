@@ -103,6 +103,7 @@
   }
 
   let jump = 2;
+  let quiet = true;
   function validateData(data, thresholds, forceCompute=false) {
     data = selectData(data);
     if(data["status"] && !forceCompute){
@@ -112,14 +113,6 @@
       let message = "";
 
       let sData = halfSmoothenData(data);
-      for(let i = 0; i < sData["count"]; i++){
-        /*/
-        console.log(sData["deletionsFwd"][i]);
-        console.log(sData["insertionsRev"][i]);
-        console.log(sData["deletionsFwd"][i]);
-        console.log(sData["deletionsRev"][i]);
-        /**/
-      }
       for (let index = jump; index < sData["count"] - jump; ++index) {
         let curr = validateSpecificIndex(index, sData, thresholds);
         if(curr["status"] === STATUS_INVALID){
@@ -148,6 +141,9 @@
         "message": message,
       }
       data["status"] = result;
+      if(!quiet){
+        console.log("indel-cycles: " + "\n" + diffMessage);
+      }
       return result;
     }
   }
@@ -190,6 +186,9 @@
     }
   }
   
+
+  let diffMessage = "no message yet";
+  let maxDiff = 0;
   function validateIndexOnString(data, string, index, thresholds){
     let currVal = data[string][index];
 
@@ -202,11 +201,18 @@
     let min = Math.min(...data[string].slice(prevIndex, index - 1), ...data[string].slice(index + 1, upcomIndex));
     let max = Math.max(previous, upcoming);
 
-    /*/
-      console.log("indel-cycles-" + string +" :-  "
-        + index + ": " + currVal + " not in (" + min * (1 - (thresholds["Ok"]/100)) + ", "
-        + max * (1 + (thresholds["Ok"]/100)) + ")");
-    /**/
+    if(!quiet){
+      let diff = Math.min(Math.abs(1-currVal/min), Math.abs(currVal/max - 1));
+      if(diff > maxDiff){
+        maxDiff = diff;
+        diffMessage = string + " on " + index + ": " + diff*100 + "%";
+      }
+      /*/
+        console.log("indel-cycles-" + string +" :-  "
+          + index + ": " + currVal + " not in (" + min * (1 - (thresholds["Ok"]/100)) + ", "
+          + max * (1 + (thresholds["Ok"]/100)) + ")");
+      /**/
+    }
     if(currVal > min * (1 - (thresholds["Ok"]/100)) && currVal < max * (1 + (thresholds["Ok"]/100))){
       return STATUS_OK;
     }
