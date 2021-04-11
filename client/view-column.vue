@@ -140,6 +140,8 @@
             return "Insert size";
           case 5:
             return "Cycle";
+          case 6:
+            return "Quality";
           case 7:
             return "% of mapped sequnces ordered by GC content";
           default:
@@ -158,6 +160,8 @@
             return "Number of pairs";
           case 5:
             return "Quality";
+          case 6:
+            return "Amount of bases";
           case 7:
             return "Mapped depth";
           default:
