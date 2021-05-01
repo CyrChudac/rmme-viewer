@@ -2,7 +2,20 @@
 Statsview is a software for NGS data visualization. This file should answer most questions you may have regarding practical usage and the programming aspect of the software.
 
 ## How to run it?  
-I don't know yet, have to discuss it. 
+Download the zip file and extract it.
+Also go to https://nodejs.org/en/download/ address to download and install Node.js. Follow their instructions.
+Then open your command line and navigate to the statsview folder.
+Run command
+
+    npm run dev
+    
+The application should now be available for you on http://localhost:8067/ address
+
+Currently, the build script does not work, otherwise you could run the
+
+    npm run build
+
+command and obtain a html file, that would no longer require running the server when opening the application.
 
 ## Files structure
 In the application there are 3 main type of files: .js, .vue, .scss.
